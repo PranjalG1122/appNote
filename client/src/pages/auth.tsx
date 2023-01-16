@@ -4,6 +4,8 @@ import Signup from "../components/Signup";
 import Signin from "../components/Signin";
 
 export default function auth() {
+  document.title = "Auth";
+
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
   return (
     <div>
@@ -12,7 +14,7 @@ export default function auth() {
 
       {(isRegistered && <></>) || (
         <>
-          <Signup />
+          <Signin />
         </>
       )}
     </div>
