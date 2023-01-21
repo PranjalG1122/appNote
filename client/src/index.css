@@ -6,7 +6,7 @@
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
-  font-weight: 400;
+  font-weight: 500;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -20,16 +20,16 @@
 }
 
 ::-webkit-scrollbar {
-  @apply w-[10px];
+  @apply max-w-[10px];
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-neutral-600;
+  @apply bg-neutral-700;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-neutral-400;
+  @apply bg-neutral-500;
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-neutral-500;
+  @apply bg-neutral-400;
 }
