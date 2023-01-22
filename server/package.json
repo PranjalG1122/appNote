@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node index.ts",
+    "dev": "ts-node api/index.ts",
     "build": "tsc --outDir .build/api",
     "start": "nodemon",
     "postinstall": "prisma generate"
