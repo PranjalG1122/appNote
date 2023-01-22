@@ -1,9 +1,9 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" },
     {
       "source": "/api/(.*)",
       "destination": "https://app-note-server.vercel.app/$1"
-    }
+    },
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
