@@ -7,8 +7,6 @@ import Container from "./components/Container";
 import { useNavigate } from "react-router-dom";
 import Notes from "./components/Notes";
 
-
-
 export default function App() {
   const navigate = useNavigate();
   document.title = "appNote";

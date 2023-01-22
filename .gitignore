@@ -25,3 +25,4 @@ dist-ssr
 
 .turbo
 .build
+.vercel
