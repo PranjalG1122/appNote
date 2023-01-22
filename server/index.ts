@@ -16,10 +16,12 @@ const prisma = new PrismaClient();
 
 const saltRounds = 10;
 
-app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
 app.use(cors());
 app.options("*", cors());
+
+// add return in gates
 
 app.post("/signup", async (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -40,7 +42,10 @@ app.post("/signup", async (req: Request, res: Response) => {
         },
       })
       .then((user) => {
-        res.send("User created with username " + user.username);
+        res.status(200).json({
+          success: true,
+          message: "Username created with username " + user.username,
+        });
       });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
@@ -48,24 +53,19 @@ app.post("/signup", async (req: Request, res: Response) => {
         console.log(
           "There is a unique constraint violation, a new user cannot be created with this username"
         );
-        res.status(409).send("User already exists");
+        res
+          .status(409)
+          .json({ success: false, message: "Username already exists" });
       } else {
-        res.status(500).send("Error occured while creating user");
+        res
+          .status(500)
+          .json({ sucess: false, message: "Error occured while signing up" });
       }
     }
   }
 });
 
 app.post("/signin", async (req: Request, res: Response) => {
-  // res.set("Access-Control-Allow-Origin", "http://localhost:3000");
-  // res.set("Access-Control-Allow-Methods", "POST, OPTIONS, GET");
-  // res.set(
-  //   "Access-Control-Allow-Headers",
-  //   "Content-Type, Origin, X-Requested-With, Accept"
-  // );
-  // res.set("Access-Control-Allow-Credentials", "true");
-  // res.set("Access-Control-Max-Age", "86400");
-  // res.set("Access-Control-Expose-Headers", "Set-Cookie");
   const { username, password } = req.body;
   try {
     const user = await prisma.user.findUnique({
@@ -74,18 +74,23 @@ app.post("/signin", async (req: Request, res: Response) => {
       },
     });
     if (!user) {
-      res.status(401).send("User does not exist");
+      res.status(401).json({
+        success: false,
+        message: "Username does not exist",
+      });
       return;
     }
     const isPasswordCorrect = await compare(password, user.password);
     if (!isPasswordCorrect) {
-      res.status(401).send("Incorrect password");
+      res.status(401).json({
+        success: false,
+        message: "Password does not exist",
+      });
+      return;
     }
     const token = jwt.sign({ username }, JWT_SECRET, {
       expiresIn: "1d",
     });
-    console.log({ token, username });
-    console.log(req.headers.origin);
 
     res
       .cookie("token", token, {
@@ -94,17 +99,18 @@ app.post("/signin", async (req: Request, res: Response) => {
         path: "/",
       })
       .status(200)
-      .send("Signed in");
+      .json({ success: true, message: "Signed in" });
   } catch (e) {
-    res.status(500).send("Error occured while signing in");
+    res
+      .status(500)
+      .json({ success: false, message: "Error occured while signing in" });
   }
 });
 
-app.get("/notes", async (req: Request, res: Response) => {
+app.get("/getnotes", async (req: Request, res: Response) => {
   const token = req.cookies.token;
-  console.log(token);
   if (!token) {
-    res.status(401).send("Unauthorized");
+    res.status(401).json({ success: false, message: "Unauthorized" });
     return;
   }
   try {
@@ -112,7 +118,7 @@ app.get("/notes", async (req: Request, res: Response) => {
       username: string;
     };
     if (!username) {
-      res.status(401).send("Unauthorized");
+      res.status(401).json({ success: false, message: "Unauthorized" });
       return;
     }
     const notes = await prisma.user
@@ -122,24 +128,117 @@ app.get("/notes", async (req: Request, res: Response) => {
         },
       })
       .Notes();
-    res.send(notes);
+    res.status(200).json({
+      success: true,
+      notes: notes!
+        .sort((a, b) => {
+          if (a.id < b.id) return -1;
+          if (a.id > b.id) return 1;
+          return 0;
+        })
+        .reverse(),
+    });
   } catch (e) {
-    res.status(401).send("Unauthorized");
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
 
-// app.get("/testing", (req: Request, res: Response) => {
-//   res.set("Access-Control-Allow-Origin", "http://localhost:3000");
-//   res.set("Access-Control-Allow-Methods", "POST, OPTIONS, GET");
-//   res.set(
-//     "Access-Control-Allow-Headers",
-//     "Content-Type, Origin, X-Requested-With, Accept"
-//   );
-//   res.set("Access-Control-Allow-Credentials", "true");
-//   res.set("Access-Control-Max-Age", "86400");
-//   res.set("Access-Control-Expose-Headers", "Set-Cookie");
-//   res.send("Hello");
-// });
+app.get("/createnote", async (req: Request, res: Response) => {
+  const token = req.cookies.token;
+  if (!token) {
+    res.status(401).json({ success: false, message: "Unauthorized" });
+    return;
+  }
+  try {
+    const { username } = jwt.verify(token, JWT_SECRET) as {
+      username: string;
+    };
+    if (!username) {
+      res.status(401).json({ success: false, message: "Unauthorized" });
+      return;
+    }
+    await prisma.notes.create({
+      data: {
+        username: username,
+        title: "title",
+        content: "content",
+      },
+    });
+    res.status(200).json({ success: true, message: "Note created" });
+  } catch (e) {
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
+app.post("/deletenote", async (req: Request, res: Response) => {
+  const token = req.cookies.token;
+  if (!token) {
+    res.status(401).json({ success: false, message: "Unauthorized" });
+    return;
+  }
+  if (!req.body.id) {
+    res.status(400).json({ success: false, message: "Bad request" });
+    return;
+  }
+  try {
+    const { username } = jwt.verify(token, JWT_SECRET) as {
+      username: string;
+    };
+    if (!username) {
+      res.status(401).json({ success: false, message: "Unauthorized" });
+      return;
+    }
+
+    await prisma.notes.delete({
+      where: {
+        username_id: {
+          username: username,
+          id: req.body.id,
+        },
+      },
+    });
+    res.status(200).json({ success: true, message: "Note deleted" });
+  } catch (e) {
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
+app.post("/updatenote", async (req: Request, res: Response) => {
+  const token = req.cookies.token;
+  if (!token) {
+    res.status(401).json({ success: false, message: "Unauthorized" });
+    return;
+  }
+  if (!req.body.id) {
+    res.status(400).json({ success: false, message: "Bad request" });
+    return;
+  }
+  try {
+    const { username } = jwt.verify(token, JWT_SECRET) as {
+      username: string;
+    };
+    if (!username) {
+      res.status(401).json({ success: false, message: "Unauthorized" });
+      return;
+    }
+
+    await prisma.notes.update({
+      where: {
+        username_id: {
+          username: username,
+          id: req.body.id,
+        },
+      },
+      data: {
+        title: req.body.title,
+        content: req.body.content,
+      },
+    });
+    res.status(200).json({ success: true, message: "Note updated" });
+  } catch (e) {
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
 
 app.listen(5000, () => {
   console.log("Application started on port 5000!");
