@@ -12,6 +12,7 @@ model Notes {
   title    String   @db.VarChar(255)
   content  String
   date     DateTime @default(now())
+  updated  DateTime @default(now()) @updatedAt
   username String
   User     User     @relation(fields: [username], references: [username])
 
