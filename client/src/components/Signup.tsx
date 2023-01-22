@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CheckSquare, Square } from "react-feather";
 import useSWRMutation from "swr/mutation";
+import { API_URL } from "../lib/utils";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export default function Signup() {
       arg: { username, password },
     }: { arg: { username: string; password: string } }
   ) => {
-    return await fetch("http://localhost:3000/api" + url, {
+    return await fetch(API_URL + url, {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 
+export const API_URL = import.meta.env.API_URL || "http://localhost:3000/api";
+
 export const getNotes = async (url: string) => {
-  return await fetch("http://localhost:3000/api" + url, {
+  return await fetch(API_URL + url, {
     method: "GET",
     credentials: "include",
     headers: {
@@ -13,7 +15,7 @@ export const getNotes = async (url: string) => {
 };
 
 export const createNote = async (url: string) => {
-  return await fetch("http://localhost:3000/api" + url, {
+  return await fetch(API_URL + url, {
     method: "GET",
     credentials: "include",
     headers: {
@@ -28,7 +30,7 @@ export const deleteNote = async (
   url: string,
   { arg: { id } }: { arg: { id: number } }
 ) => {
-  return await fetch("http://localhost:3000/api" + url, {
+  return await fetch(API_URL + url, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -48,7 +50,7 @@ export const updateNote = async (
     arg: { id, title, content },
   }: { arg: { id: number; title: string; content: string } }
 ) => {
-  return await fetch("http://localhost:3000/api" + url, {
+  return await fetch(API_URL + url, {
     method: "POST",
     credentials: "include",
     headers: {
