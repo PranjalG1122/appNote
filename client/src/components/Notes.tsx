@@ -179,9 +179,9 @@ export default function Notes() {
                   <p>{note.id}</p>
                   <p className="font-semibold truncate">{note.title}</p>
                   <p className="truncate">{note.content}</p>
-                  {isMutatingUpdateNote && currentIndex == note.id ? (
+                  {/* {isMutatingUpdateNote && currentIndex == note.id ? (
                     <Loader />
-                  ) : null}
+                  ) : null} */}
                 </div>
               </div>
             );
