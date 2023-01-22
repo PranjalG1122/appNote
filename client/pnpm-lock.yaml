@@ -17,6 +17,7 @@ specifiers:
   typescript: ^4.9.3
   use-local-storage: ^2.3.6
   vite: ^4.0.0
+  zustand: ^4.3.2
 
 dependencies:
   node-fetch: 3.3.0
@@ -26,6 +27,7 @@ dependencies:
   react-router-dom: 6.6.2_biqbaboplfbrettd7655fr4n2y
   swr: 2.0.0_react@18.2.0
   use-local-storage: 2.3.6_react@18.2.0
+  zustand: 4.3.2_react@18.2.0
 
 devDependencies:
   '@types/react': 18.0.26
@@ -2680,3 +2682,19 @@ packages:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
     dev: true
+
+  /zustand/4.3.2_react@18.2.0:
+    resolution: {integrity: sha512-rd4haDmlwMTVWVqwvgy00ny8rtti/klRoZjFbL/MAcDnmD5qSw/RZc+Vddstdv90M5Lv6RPgWvm1Hivyn0QgJw==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      immer: '>=9.0'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      immer:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false

@@ -15,7 +15,8 @@
     "react-feather": "^2.0.10",
     "react-router-dom": "^6.6.2",
     "swr": "^2.0.0",
-    "use-local-storage": "^2.3.6"
+    "use-local-storage": "^2.3.6",
+    "zustand": "^4.3.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
