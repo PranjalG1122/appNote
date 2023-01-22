@@ -1,7 +1,9 @@
 {
   "name": "appnote",
   "private": true,
-  "workspaces": ["./*"],
+  "workspaces": [
+    "./*"
+  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
@@ -14,6 +16,5 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {},
   "packageManager": "pnpm@7.23.0"
 }
