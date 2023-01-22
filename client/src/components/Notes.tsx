@@ -47,8 +47,8 @@ const useNoteStore = create<NoteStore>()((set, get) => ({
     }),
   updateIndex: (index: number) => set((state) => ({ currentIndex: index })),
   updateNotes: (notes: NoteType[]) => set((state) => ({ notes })),
-  getTitle: () => get().notes[get().currentIndex]?.title,
-  getContent: () => get().notes[get().currentIndex]?.content,
+  getTitle: () => get().notes[get().currentIndex]?.title ?? "",
+  getContent: () => get().notes[get().currentIndex]?.content ?? "",
 }));
 
 export default function Notes() {
@@ -111,6 +111,15 @@ export default function Notes() {
 
   useEffect(() => {
     triggerGetNotes();
+    // const interval = setInterval(() => {
+    //   console.log("interval");
+    //   triggerUpdateNote({
+    //     id: notes[currentIndex]?.id,
+    //     title: getTitle(),
+    //     content: getContent(),
+    //   });
+    // }, 10000);
+    // return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
