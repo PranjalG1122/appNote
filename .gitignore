@@ -26,3 +26,5 @@ dist-ssr
 .turbo
 .build
 .vercel
+
+.env
