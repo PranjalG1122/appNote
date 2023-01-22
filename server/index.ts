@@ -23,6 +23,10 @@ app.options("*", cors());
 
 // add return in gates
 
+app.get("/ping", (req: Request, res: Response) => {
+  res.status(200).json({ success: true, message: "pong" });
+});
+
 app.post("/signup", async (req: Request, res: Response) => {
   const { username, password } = req.body;
   const hashedPassword = await hash(password, saltRounds);
