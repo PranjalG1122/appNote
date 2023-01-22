@@ -8,7 +8,10 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/api": {
-        target: process.env.API_URL || "http://localhost:5000",
+        target:
+          process.env.API_URL ||
+          "https://app-note-server.vercel.app" ||
+          "http://localhost:5000",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

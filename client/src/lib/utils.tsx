@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 
-export const API_URL = import.meta.env.API_URL || "http://localhost:3000/api";
+export const API_URL =
+  import.meta.env.API_URL ||
+  "https://app-note-server.vercel.app" ||
+  "http://localhost:3000/api";
 
 export const getNotes = async (url: string) => {
   return await fetch(API_URL + url, {
