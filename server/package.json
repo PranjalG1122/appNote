@@ -2,11 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": ".build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node ./index.ts",
-    "build": "tsc --outDir .build",
+    "dev": "ts-node ./api/index.ts",
+    "build": "tsc api/index.ts --outDir .build",
     "start": "nodemon"
   },
   "keywords": [],
