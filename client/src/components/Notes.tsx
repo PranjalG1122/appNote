@@ -64,6 +64,8 @@ export default function Notes() {
   } = useNoteStore((state) => state);
   const ref = useRef(null);
 
+  const [search, setSearch] = useState<string>("");
+
   const { trigger: triggerGetNotes, isMutating: isMutatingGetNotes } =
     useSWRMutation("/getnotes", async (url: string) => {
       return await getNotes(url).then((res) => {
@@ -111,15 +113,6 @@ export default function Notes() {
 
   useEffect(() => {
     triggerGetNotes();
-    // const interval = setInterval(() => {
-    //   console.log("interval");
-    //   triggerUpdateNote({
-    //     id: notes[currentIndex]?.id,
-    //     title: getTitle(),
-    //     content: getContent(),
-    //   });
-    // }, 10000);
-    // return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -163,6 +156,9 @@ export default function Notes() {
           <input
             placeholder="Search"
             className="outline-none w-full placeholder:text-neutral-300 font-medium border-b-2 py-1"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
           />
         </div>
         <div className="w-full overflow-auto">
@@ -173,7 +169,12 @@ export default function Notes() {
                 onClick={() => {
                   updateIndex(i);
                 }}
-                className="cursor-pointer"
+                className={
+                  "cursor-pointer " +
+                  (note.title.toLowerCase().includes(search.toLowerCase())
+                    ? "visible"
+                    : "hidden")
+                }
               >
                 <div className="border-b-2 p-2 my-1 h-20 flex flex-col justify-center">
                   <p>{note.id}</p>
