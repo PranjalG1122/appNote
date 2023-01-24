@@ -80,7 +80,7 @@ app.post("/signin", async (req: Request, res: Response) => {
     if (!user) {
       res.status(401).json({
         success: false,
-        message: "Username does not exist",
+        message: "Username or password is incorrect",
       });
       return;
     }
