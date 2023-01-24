@@ -37,10 +37,10 @@ app.post("/signup", async (req: Request, res: Response) => {
           username,
           password: hashedPassword,
           Notes: {
-            // Create a new note for the user with instructions
             create: {
-              title: "My first note",
-              content: "This is my first note",
+              title: "Welcome to appNote!",
+              content:
+                "This is your first note. You can edit it by clicking on the note. You can also create new notes by clicking on the plus button. You can delete a note by clicking on the trash button.",
             },
           },
         },
@@ -88,7 +88,7 @@ app.post("/signin", async (req: Request, res: Response) => {
     if (!isPasswordCorrect) {
       res.status(401).json({
         success: false,
-        message: "Password does not exist",
+        message: "Username or password is incorrect",
       });
       return;
     }
@@ -99,7 +99,7 @@ app.post("/signin", async (req: Request, res: Response) => {
     res
       .cookie("token", token, {
         secure: true,
-        maxAge: 1000 * 60 * 60 * 24,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
         path: "/",
       })
       .status(200)
