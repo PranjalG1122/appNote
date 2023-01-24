@@ -104,6 +104,7 @@ export default function Signup() {
           await trigger({ username, password })
             .then((res) => {
               if (res.success) {
+                document.cookie = `token=;`;
                 setErrorMessage("");
                 navigate(0);
               } else {
