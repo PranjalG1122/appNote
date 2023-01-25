@@ -11,8 +11,12 @@ export default function auth() {
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
   useEffect(() => {
     const cookie = document.cookie.split(";")[0].split("=")[1];
-    if (cookie === "" || cookie === undefined) {
+    if (cookie === undefined) {
       setIsRegistered(false);
+      return;
+    }
+    if (cookie === "") {
+      setIsRegistered(true);
       return;
     }
     if (TokenBody(cookie)?.exp > Date.now() / 1000) {
@@ -53,7 +57,7 @@ export default function auth() {
               here
             </button>
           </div>
-          <div className="flex flex-col text-base items-center text-neutral-400 mt-2">
+          <div className="flex flex-col text-base items-center text-neutral-500 mt-2">
             By creating an account you agree to our
             <div className="ml-1 text-blue-500 hover:underline">
               <Link to="/terms">Terms of Service</Link>
