@@ -42,14 +42,14 @@ export default function Signup() {
   );
 
   return (
-    <div className="flex flex-col gap-2 justify-center items-center w-80 font-semibold">
-      <h1 className="desktop:text-3xl text-2xl mb-6">Sign Up</h1>
+    <div className="flex flex-col gap-2 justify-center items-center w-80">
+      <h1 className="desktop:text-3xl text-2xl mb-6 font-semibold">Sign Up</h1>
       <input
         type="text"
         placeholder="Username"
         autoComplete="off"
         name="username"
-        className="w-80 text-base px-4 py-2 rounded bg-neutral-800 focus:bg-neutral-700 focus:outline-none"
+        className="w-80 text-base px-0.5 py-2 bg-white border-b-2 border-neutral-400 focus:border-black placeholder:text-neutral-600 focus:outline-none"
         onChange={(e) => setUsername(e.target.value)}
       ></input>
       <input
@@ -57,7 +57,7 @@ export default function Signup() {
         placeholder="Password"
         autoComplete="off"
         name="password"
-        className="w-80 text-base px-4 py-2 rounded bg-neutral-800 focus:bg-neutral-700 focus:outline-none"
+        className="w-80 text-base px-0.5 py-2 bg-white border-b-2 border-neutral-400 focus:border-black placeholder:text-neutral-600 focus:outline-none"
         onChange={(e) => setPassword(e.target.value)}
       ></input>
       <input
@@ -65,7 +65,7 @@ export default function Signup() {
         placeholder="Confirm Password"
         autoComplete="off"
         name="matchPassword"
-        className="w-80 text-base px-4 py-2 rounded bg-neutral-800 focus:bg-neutral-700 focus:outline-none"
+        className="w-80 text-base px-0.5 py-2 bg-white border-b-2 border-neutral-400 focus:border-black placeholder:text-neutral-600 focus:outline-none"
         onChange={(e) => setConfirmPassword(e.target.value)}
       ></input>
       <button
@@ -79,7 +79,7 @@ export default function Signup() {
       </button>
       <button
         disabled={isMutating}
-        className="w-80 text-white bg-gradient-to-r from-violet-500 via-purple-600 to-fuchsia-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-purple-800 shadow-md shadow-purple-800/80 font-semibold rounded text-base px-4 py-2 text-center"
+        className="text-white w-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded text-xl p-2 text-center"
         onClick={async () => {
           if (!(username.length > 3)) {
             setErrorMessage("Username must be at least 4 characters long");
