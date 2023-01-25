@@ -39,15 +39,15 @@ export default function Signin() {
   );
 
   return (
-    <div className="flex flex-col gap-2 justify-center items-center w-80 font-semibold">
-      <h1 className="desktop:text-3xl text-2xl mb-6">Sign In</h1>
+    <div className="flex flex-col gap-2 justify-center items-center w-80">
+      <h1 className="desktop:text-3xl text-2xl mb-6 font-semibold">Sign In</h1>
       <input
         type="text"
         placeholder="Username"
         autoComplete="off"
         required
         name="username"
-        className="w-80 text-base px-4 py-2 rounded bg-neutral-800 focus:bg-neutral-700 focus:outline-none"
+        className="w-80 text-base px-0.5 py-2 bg-white border-b-2 border-neutral-400 focus:border-black placeholder:text-neutral-600 focus:outline-none"
         onChange={(e) => setUsername(e.target.value)}
       ></input>
       <input
@@ -56,7 +56,7 @@ export default function Signin() {
         autoComplete="off"
         required
         name="password"
-        className="w-80 text-base px-4 py-2 rounded bg-neutral-800 focus:bg-neutral-700 focus:outline-none"
+        className="w-80 text-base px-0.5 py-2 bg-white border-b-2 border-neutral-400 focus:border-black placeholder:text-neutral-600 focus:outline-none"
         onChange={(e) => setPassword(e.target.value)}
       ></input>
       <button
@@ -70,8 +70,12 @@ export default function Signin() {
       </button>
       <button
         disabled={isMutating}
-        className="w-80 text-white bg-gradient-to-r from-violet-500 via-purple-600 to-fuchsia-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-purple-800 shadow-md shadow-purple-800/80 font-semibold rounded text-base px-4 py-2 text-center"
+        className="text-white w-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded text-xl p-2 text-center"
         onClick={async () => {
+          if (username.length === 0 || password.length === 0) {
+            setErrorMessage("Fields cannot be empty");
+            return;
+          }
           await trigger({ username, password })
             .then((res) => {
               if (res.success) {
