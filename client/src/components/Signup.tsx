@@ -46,26 +46,29 @@ export default function Signup() {
       <h1 className="desktop:text-3xl text-2xl mb-6 font-semibold">Sign Up</h1>
       <input
         type="text"
+        spellCheck={false}
         placeholder="Username"
         autoComplete="off"
         name="username"
-        className="w-80 text-base px-0.5 py-2 bg-white border-b-2 border-neutral-400 focus:border-black placeholder:text-neutral-600 focus:outline-none"
+        className="w-80 text-base px-1 py-2 bg-neutral-800 focus:bg-neutral-700 placeholder:text-neutral-400 focus:outline-none rounded"
         onChange={(e) => setUsername(e.target.value)}
       ></input>
       <input
         type={showPassword ? "text" : "password"}
+        spellCheck={false}
         placeholder="Password"
         autoComplete="off"
         name="password"
-        className="w-80 text-base px-0.5 py-2 bg-white border-b-2 border-neutral-400 focus:border-black placeholder:text-neutral-600 focus:outline-none"
+        className="w-80 text-base px-1 py-2 bg-neutral-800 focus:bg-neutral-700 placeholder:text-neutral-400 focus:outline-none rounded"
         onChange={(e) => setPassword(e.target.value)}
       ></input>
       <input
         type={showPassword ? "text" : "password"}
+        spellCheck={false}
         placeholder="Confirm Password"
         autoComplete="off"
         name="matchPassword"
-        className="w-80 text-base px-0.5 py-2 bg-white border-b-2 border-neutral-400 focus:border-black placeholder:text-neutral-600 focus:outline-none"
+        className="w-80 text-base px-1 py-2 bg-neutral-800 focus:bg-neutral-700 placeholder:text-neutral-400 focus:outline-none rounded"
         onChange={(e) => setConfirmPassword(e.target.value)}
       ></input>
       <button

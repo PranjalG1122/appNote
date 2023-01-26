@@ -27,17 +27,15 @@ export default function App() {
     <>
       {(isSignedIn && <Notes></Notes>) || (
         <Container>
-          <div className="flex flex-col items-center gap-2 text-black">
+          <div className="flex flex-col items-center gap-2">
             <h1 className="desktop:text-6xl text-4xl font-semibold">appNote</h1>
             <p className="desktop:text-2xl text-lg text-center px-2 py-1">
               The best <span className="font-semibold">app</span>
-              lication to write a{" "}
-              <span className="font-semibold">note</span>
+              lication to write a <span className="font-semibold">note</span>
             </p>
             <Link to="/auth">
-              <p 
-              className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-md shadow-blue-800/80 font-semibold rounded text-xl p-2 text-center">
-              Start now
+              <p className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded text-xl p-2 text-center">
+                Start now
               </p>
             </Link>
           </div>
