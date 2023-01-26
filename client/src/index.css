@@ -10,7 +10,6 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -24,12 +23,13 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-neutral-700;
+  @apply bg-neutral-200;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-neutral-500;
-}
-::-webkit-scrollbar-thumb:hover {
   @apply bg-neutral-400;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-500;
 }
