@@ -40,7 +40,7 @@ app.post("/signup", async (req: Request, res: Response) => {
             create: {
               title: "Welcome to appNote!",
               content:
-                "This is your first note. You can edit it by clicking on the note. You can also create new notes by clicking on the plus button. You can delete a note by clicking on the trash button.",
+                "This is your first note. You can edit it by clicking on the note.",
             },
           },
         },
@@ -164,8 +164,8 @@ app.get("/createnote", async (req: Request, res: Response) => {
     await prisma.notes.create({
       data: {
         username: username,
-        title: "title",
-        content: "content",
+        title: "",
+        content: "",
       },
     });
     res.status(200).json({ success: true, message: "Note created" });
