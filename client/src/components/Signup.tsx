@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CheckSquare, Square } from "react-feather";
+import { CheckSquare, Loader, Square } from "react-feather";
 import useSWRMutation from "swr/mutation";
 import { API_URL } from "../lib/utils";
 
@@ -119,7 +119,11 @@ export default function Signup() {
             });
         }}
       >
-        Create User
+        {isMutating ? (
+          <Loader className="w-full animate-spin" />
+        ) : (
+          "Create User"
+        )}
       </button>
       {errorMessage && (
         <p className="fixed bottom-10 mx-4 max-w-96 text-center font-semibold text-white bg-red-600 desktop:px-2 py-1 px-1 rounded desktop:text-base text-sm">

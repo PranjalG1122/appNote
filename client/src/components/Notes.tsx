@@ -220,7 +220,7 @@ export default function Notes() {
               className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded text-base desktop:px-2 p-1 text-center"
             >
               {isMutatingCreateNote ? (
-                <Loader className="desktop:w-16 desktop:h-7 " />
+                <Loader className="animate-spin desktop:w-16 desktop:h-7 " />
               ) : (
                 <>
                   <Plus className="desktop:hidden visible" />
@@ -235,7 +235,7 @@ export default function Notes() {
               className="text-white bg-gradient-to-r from-red-500 to-red-800 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-red-800/80 font-semibold rounded text-base desktop:px-2 p-1 text-center"
             >
               {isMutatingDeleteNote ? (
-                <Loader className="desktop:w-16 desktop:h-7 " />
+                <Loader className="animate-spin desktop:w-16 desktop:h-7 " />
               ) : (
                 <>
                   <Trash className="desktop:hidden visible" />

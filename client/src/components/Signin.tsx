@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CheckSquare, Square } from "react-feather";
+import { CheckSquare, Loader, Square } from "react-feather";
 import useSWRMutation from "swr/mutation";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../lib/utils";
@@ -33,10 +33,7 @@ export default function Signin() {
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const { trigger, isMutating, data, error } = useSWRMutation(
-    "/signin",
-    getUser
-  );
+  const { trigger, isMutating } = useSWRMutation("/signin", getUser);
 
   return (
     <div className="flex flex-col gap-2 justify-center items-center w-80">
@@ -92,7 +89,7 @@ export default function Signin() {
             });
         }}
       >
-        Sign In
+        {isMutating ? <Loader className="w-full animate-spin" /> : "Sign In"}
       </button>
       {errorMessage && (
         <p className="fixed bottom-10 mx-4 max-w-96 text-center font-semibold text-white bg-red-600 desktop:px-2 py-1 px-1 rounded desktop:text-base text-sm">
