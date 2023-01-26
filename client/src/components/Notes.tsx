@@ -278,22 +278,22 @@ export default function Notes() {
                 value={getContent()}
                 disabled={isMutatingGetNotes}
                 spellCheck={false}
-                onKeyDown={(e) => {
-                  if (e.key === "Tab") {
-                    e.preventDefault();
-                    var start = e.target.selectionStart;
-                    var end = e.target.selectionEnd;
+                // onKeyDown={(e) => {
+                //   if (e.key === "Tab") {
+                //     e.preventDefault();
+                //     var start = e.target.selectionStart;
+                //     var end = e.target.selectionEnd;
 
-                    // set textarea value to: text before caret + tab + text after caret
-                    e.target.value =
-                      e.target.value.substring(0, start) +
-                      "\t" +
-                      e.target.value.substring(end);
+                //     // set textarea value to: text before caret + tab + text after caret
+                //     e.target.value =
+                //       e.target.value.substring(0, start) +
+                //       "\t" +
+                //       e.target.value.substring(end);
 
-                    // put caret at right position again
-                    e.target.selectionStart = e.target.selectionEnd = start + 1;
-                  }
-                }}
+                //     // put caret at right position again
+                //     e.target.selectionStart = e.target.selectionEnd = start + 1;
+                //   }
+                // }}
                 onChange={(e) => {
                   updateContent(e.target.value);
                 }}
