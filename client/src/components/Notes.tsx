@@ -1,13 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader, LogOut, Menu, Plus, Search, Trash } from "react-feather";
 import useSWRMutation from "swr/mutation";
-import {
-  getNotes,
-  createNote,
-  deleteNote,
-  updateNote,
-  useOnClickOutside,
-} from "../lib/utils";
+import { getNotes, createNote, deleteNote, updateNote } from "../lib/utils";
 import { create } from "zustand";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
@@ -65,7 +59,6 @@ export default function Notes() {
     getTitle,
     getContent,
   } = useNoteStore((state) => state);
-  const ref = useRef(null);
 
   const [search, setSearch] = useState<string>("");
   const [isMobileMenuClicked, setIsMobileMenuClicked] =
@@ -139,16 +132,6 @@ export default function Notes() {
     });
     return "";
   };
-
-  useOnClickOutside(ref, () => {
-    if (typeof currentIndex == "number" && notes.length > 0) {
-      triggerUpdateNote({
-        id: notes[currentIndex].id,
-        title: getTitle(),
-        content: getContent(),
-      });
-    }
-  });
 
   return (
     <main className="flex flex-row min-h-screen w-full text-white bg-neutral-900">
@@ -252,7 +235,15 @@ export default function Notes() {
         </div>
         <div
           className="w-full bg-neutral-900 h-full flex flex-col justify-center items-center desktop:px-4 px-2 py-2"
-          ref={ref}
+          onBlur={() => {
+            if (typeof currentIndex == "number" && notes.length > 0) {
+              triggerUpdateNote({
+                id: notes[currentIndex].id,
+                title: getTitle(),
+                content: getContent(),
+              });
+            }
+          }}
         >
           {isMutatingGetNotes ? (
             <Loader className="animate-spin" />
