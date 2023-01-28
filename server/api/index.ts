@@ -93,13 +93,13 @@ app.post("/signin", async (req: Request, res: Response) => {
       return;
     }
     const token = jwt.sign({ username }, JWT_SECRET, {
-      expiresIn: "1d",
+      expiresIn: "30d",
     });
 
     res
       .cookie("token", token, {
         secure: true,
-        maxAge: 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 30,
         path: "/",
       })
       .status(200)
