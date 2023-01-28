@@ -159,9 +159,18 @@ export default function Notes() {
             .map((note, i) => {
               return (
                 <div key={note.id} className="px-2 py-1 mb-1">
-                  <p className="text-sm text-neutral-400 italic">
-                    Last updated: {format(new Date(note.updated), " dd/M/yyyy")}
-                  </p>
+                  <div className="flex flex-row items-center gap-2">
+                    <p className="text-sm text-neutral-400 italic">
+                      Last updated:{" "}
+                      {format(new Date(note.updated), " dd/M/yyyy")}
+                    </p>
+                    <p>
+                      {" "}
+                      {isMutatingUpdateNote && currentIndex === i ? (
+                        <Loader className="animate-spin h-3 w-3" />
+                      ) : null}
+                    </p>
+                  </div>
                   <div
                     onClick={() => {
                       updateIndex(i);
