@@ -10,6 +10,7 @@ import {
 } from "../lib/utils";
 import { create } from "zustand";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
 type NoteType = {
   content: string;
@@ -153,7 +154,7 @@ export default function Notes() {
     <main className="flex flex-row min-h-screen w-full text-white bg-neutral-900">
       <div
         className={
-          "desktop:left-auto transition-all delay-300 desktop:flex desktop:relative fixed bottom-0 top-0 bg-neutral-900 overflow-auto flex-col items-center w-[24rem] border-r-4 border-neutral-800 max-h-screen " +
+          "desktop:left-auto transition-all delay-300 desktop:flex desktop:relative fixed bottom-0 top-0 bg-neutral-900 overflow-auto flex-col items-center desktop:w-96 md:w-80 w-full md:border-r-4 border-neutral-800 max-h-screen " +
           (isMobileMenuClicked ? "left-0" : "left-[-24rem]")
         }
       >
@@ -174,25 +175,22 @@ export default function Notes() {
             })
             .map((note, i) => {
               return (
-                <div
-                  key={note.id}
-                  onClick={() => {
-                    updateIndex(i);
-                    setIsMobileMenuClicked(false);
-                  }}
-                  className="cursor-pointer px-2 py-1 mb-1"
-                >
+                <div key={note.id} className="px-2 py-1 mb-1">
+                  <p className="text-sm text-neutral-400 italic">
+                    Last updated: {format(new Date(note.updated), " dd/M/yyyy")}
+                  </p>
                   <div
+                    onClick={() => {
+                      updateIndex(i);
+                      setIsMobileMenuClicked(false);
+                    }}
                     className={
-                      "px-2 h-20 flex flex-col justify-center bg-neutral-800 rounded-md " +
+                      "cursor-pointer px-2 h-20 flex flex-col justify-center bg-neutral-800 rounded-md " +
                       (currentIndex === i ? "bg-neutral-700" : "")
                     }
                   >
                     <p className="font-semibold truncate">{note.title}</p>
                     <p className="truncate">{note.content}</p>
-                    {isMutatingUpdateNote && currentIndex === note.id ? (
-                      <Loader />
-                    ) : null}
                   </div>
                 </div>
               );
@@ -200,7 +198,7 @@ export default function Notes() {
         </div>
       </div>
       <div className="flex flex-col flex-grow">
-        <div className="flex flex-row items-center w-full justify-between p-2">
+        <div className="flex flex-row items-center w-full justify-between desktop:px-4 px-2 py-2">
           <div className="flex flex-row items-center gap-2 ">
             <button
               className={
@@ -220,11 +218,10 @@ export default function Notes() {
               className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded text-base desktop:px-2 p-1 text-center"
             >
               {isMutatingCreateNote ? (
-                <Loader className="animate-spin desktop:w-16 desktop:h-7 " />
+                <Loader className="animate-spin" />
               ) : (
                 <>
-                  <Plus className="desktop:hidden visible" />
-                  <p className="text-xl max-desktop:hidden w-16 h-7">Create</p>
+                  <Plus />
                 </>
               )}
             </button>
@@ -235,11 +232,10 @@ export default function Notes() {
               className="text-white bg-gradient-to-r from-red-500 to-red-800 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-red-800/80 font-semibold rounded text-base desktop:px-2 p-1 text-center"
             >
               {isMutatingDeleteNote ? (
-                <Loader className="animate-spin desktop:w-16 desktop:h-7 " />
+                <Loader className="animate-spin" />
               ) : (
                 <>
-                  <Trash className="desktop:hidden visible" />
-                  <p className="text-xl max-desktop:hidden w-16 h-7">Delete</p>
+                  <Trash />
                 </>
               )}
             </button>
@@ -249,68 +245,73 @@ export default function Notes() {
               document.cookie = "token=;";
               navigate(0);
             }}
-            className="text-white mx-2 bg-gradient-to-r from-violet-500 to-purple-700 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-purple-800/80 font-semibold rounded text-base desktop:px-2 p-1 text-center"
+            className="text-white bg-gradient-to-r from-violet-500 to-purple-700 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-purple-800/80 font-semibold rounded text-base desktop:px-2 p-1 text-center"
           >
-            <LogOut className="desktop:hidden visible" />
-            <p className="text-xl max-desktop:hidden">Sign out</p>
+            <LogOut />
           </button>
         </div>
         <div
-          className="w-full bg-neutral-900 h-full flex flex-col justify-center items-center desktop:px-8 px-4 desktop:py-4 py-2"
+          className="w-full bg-neutral-900 h-full flex flex-col justify-center items-center desktop:px-4 px-2 py-2"
           ref={ref}
         >
-          {notes.length > 0 ? (
-            <>
-              <div className="w-full flex flex-row items-center">
-                <input
-                  spellCheck={false}
-                  className="flex-grow flex desktop:text-2xl border-4 border-neutral-800 px-2 py-1 rounded bg-neutral-900 focus:outline-none font-semibold"
-                  id="title"
-                  value={getTitle()}
-                  onChange={(e) => {
-                    updateTitle(e.target.value);
-                  }}
-                />
-              </div>
-              <textarea
-                autoFocus={true}
-                id="textarea"
-                value={getContent()}
-                disabled={isMutatingGetNotes}
-                spellCheck={false}
-                // onKeyDown={(e) => {
-                //   if (e.key === "Tab") {
-                //     e.preventDefault();
-                //     var start = e.target.selectionStart;
-                //     var end = e.target.selectionEnd;
-
-                //     // set textarea value to: text before caret + tab + text after caret
-                //     e.target.value =
-                //       e.target.value.substring(0, start) +
-                //       "\t" +
-                //       e.target.value.substring(end);
-
-                //     // put caret at right position again
-                //     e.target.selectionStart = e.target.selectionEnd = start + 1;
-                //   }
-                // }}
-                onChange={(e) => {
-                  updateContent(e.target.value);
-                }}
-                className="w-full h-full bg-neutral-900 border-4 border-neutral-800 px-2 py-1 mt-4 rounded focus:outline-none resize-none desktop:text-base"
-              ></textarea>
-            </>
+          {isMutatingGetNotes ? (
+            <Loader className="animate-spin" />
           ) : (
-            <div className="w-full bg-neutral-900 h-full flex flex-col justify-center items-center">
-              <button
-                onClick={() => {
-                  triggerCreateNote();
-                }}
-                className="text-white bg-gradient-to-r  from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded text-xl p-2 text-center"
-              >
-                Create a new note
-              </button>
-            </div>
+            <>
+              {notes.length > 0 ? (
+                <>
+                  <div className="w-full flex flex-row items-center">
+                    <input
+                      spellCheck={false}
+                      className="flex-grow flex desktop:text-2xl border-4 border-neutral-800 px-2 py-1 rounded bg-neutral-900 focus:outline-none font-semibold"
+                      id="title"
+                      value={getTitle()}
+                      onChange={(e) => {
+                        updateTitle(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <textarea
+                    autoFocus={true}
+                    id="textarea"
+                    value={getContent()}
+                    disabled={isMutatingGetNotes}
+                    spellCheck={false}
+                    // onKeyDown={(e) => {
+                    //   if (e.key === "Tab") {
+                    //     e.preventDefault();
+                    //     var start = e.target.selectionStart;
+                    //     var end = e.target.selectionEnd;
+
+                    //     // set textarea value to: text before caret + tab + text after caret
+                    //     e.target.value =
+                    //       e.target.value.substring(0, start) +
+                    //       "\t" +
+                    //       e.target.value.substring(end);
+
+                    //     // put caret at right position again
+                    //     e.target.selectionStart = e.target.selectionEnd = start + 1;
+                    //   }
+                    // }}
+                    onChange={(e) => {
+                      updateContent(e.target.value);
+                    }}
+                    className="w-full h-full bg-neutral-900 border-4 border-neutral-800 px-2 py-1 mt-4 rounded focus:outline-none resize-none desktop:text-base"
+                  ></textarea>
+                </>
+              ) : (
+                <div className="w-full bg-neutral-900 h-full flex flex-col justify-center items-center">
+                  <button
+                    onClick={() => {
+                      triggerCreateNote();
+                    }}
+                    className="text-white bg-gradient-to-r  from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded text-xl p-2 text-center"
+                  >
+                    Create a new note
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
