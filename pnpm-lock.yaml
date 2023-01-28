@@ -17,6 +17,7 @@ importers:
       '@types/react-dom': ^18.0.9
       '@vitejs/plugin-react': ^3.0.0
       autoprefixer: ^10.4.13
+      date-fns: ^2.29.3
       node-fetch: ^3.3.0
       postcss: ^8.4.21
       react: ^18.2.0
@@ -32,6 +33,7 @@ importers:
       zustand: ^4.3.2
     dependencies:
       '@types/node': 18.11.18
+      date-fns: 2.29.3
       node-fetch: 3.3.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -1291,6 +1293,11 @@ packages:
       eventemitter2: 5.0.1
       lodash: 4.17.5
     dev: true
+
+  /date-fns/2.29.3:
+    resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
+    engines: {node: '>=0.11'}
+    dev: false
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
