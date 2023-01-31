@@ -138,7 +138,7 @@ export default function Notes() {
       <div
         className={
           "desktop:left-auto transition-all delay-300 desktop:flex desktop:relative fixed bottom-0 top-0 bg-neutral-900 overflow-auto flex-col items-center desktop:w-96 md:w-80 w-full md:border-r-4 border-neutral-800 max-h-screen " +
-          (isMobileMenuClicked ? "left-0" : "left-[-24rem]")
+          (isMobileMenuClicked ? "left-0" : "left-[-100%]")
         }
       >
         <div className="flex flex-row items-center w-full px-2">
@@ -237,7 +237,7 @@ export default function Notes() {
               document.cookie = "token=;";
               navigate(0);
             }}
-            className="text-white bg-gradient-to-r from-violet-500 to-purple-700 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-purple-800/80 font-semibold rounded text-base desktop:px-2 p-1 text-center"
+            className="text-black bg-gradient-to-r from-neutral-300 to-neutral-400 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-neutral-800/80 font-semibold rounded text-base desktop:px-2 p-1 text-center"
           >
             <LogOut />
           </button>
