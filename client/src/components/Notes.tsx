@@ -262,6 +262,7 @@ export default function Notes() {
                 <>
                   <div className="w-full flex flex-row items-center">
                     <input
+                      autoFocus={true}
                       spellCheck={false}
                       className="flex-grow flex desktop:text-2xl border-4 border-neutral-800 px-2 py-1 rounded bg-neutral-900 focus:outline-none font-semibold"
                       id="title"
@@ -272,7 +273,6 @@ export default function Notes() {
                     />
                   </div>
                   <textarea
-                    autoFocus={true}
                     id="textarea"
                     value={getContent()}
                     disabled={isMutatingGetNotes}
