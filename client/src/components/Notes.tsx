@@ -152,41 +152,40 @@ export default function Notes() {
           />
         </div>
         <div className="w-full overflow-auto mt-0">
-          {notes
-            .filter((note) => {
-              return note.title.toLowerCase().includes(search.toLowerCase());
-            })
-            .map((note, i) => {
-              return (
-                <div key={note.id} className="px-2 py-1 mb-1">
-                  <div className="flex flex-row items-center gap-2">
-                    <p className="text-sm text-neutral-400 italic">
-                      Last updated:{" "}
-                      {format(new Date(note.updated), " dd/M/yyyy")}
-                    </p>
-                    <p>
-                      {" "}
-                      {isMutatingUpdateNote && currentIndex === i ? (
-                        <Loader className="animate-spin h-3 w-3" />
-                      ) : null}
-                    </p>
-                  </div>
-                  <div
-                    onClick={() => {
-                      updateIndex(i);
-                      setIsMobileMenuClicked(false);
-                    }}
-                    className={
-                      "cursor-pointer px-2 h-20 flex flex-col justify-center bg-neutral-800 rounded-md " +
-                      (currentIndex === i ? "bg-neutral-700" : "")
-                    }
-                  >
-                    <p className="font-semibold truncate">{note.title}</p>
-                    <p className="truncate">{note.content}</p>
-                  </div>
+          {notes.map((note, i) => {
+            if (!note.title.toLowerCase().includes(search.toLowerCase())) {
+              return;
+            }
+            return (
+              <div key={note.id} className="px-2 py-1 mb-1">
+                <div className="flex flex-row items-center gap-2">
+                  <p className="text-sm text-neutral-400 italic">
+                    Last updated:{" "}
+                    {format(new Date(note.updated), " dd/MM/yyyy")}
+                  </p>
+                  <p>
+                    {" "}
+                    {isMutatingUpdateNote && currentIndex === i ? (
+                      <Loader className="animate-spin h-3 w-3" />
+                    ) : null}
+                  </p>
                 </div>
-              );
-            })}
+                <div
+                  onClick={() => {
+                    updateIndex(i);
+                    setIsMobileMenuClicked(false);
+                  }}
+                  className={
+                    "cursor-pointer px-2 h-20 flex flex-col justify-center bg-neutral-800 rounded-md " +
+                    (currentIndex === i ? "bg-neutral-700" : "")
+                  }
+                >
+                  <p className="font-semibold truncate">{note.title}</p>
+                  <p className="truncate">{note.content}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className="flex flex-col flex-grow">
