@@ -3,12 +3,7 @@ const CACHE_NAME = "cool-cache";
 const PRECACHE_ASSETS = [];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(
-    (async () => {
-      const cache = await caches.open(CACHE_NAME);
-      cache.addAll(PRECACHE_ASSETS);
-    })()
-  );
+  event.waitUntil((async () => {})());
 });
 
 self.addEventListener("activate", (event) => {
@@ -25,6 +20,6 @@ self.addEventListener("fetch", (event) => {
     //   return cachedResponse;
     // } else {
     // }
-    return fetch(event.request);
+    return await fetch(event.request);
   });
 });
