@@ -6,7 +6,7 @@
   "name": "appNote",
   "orientation": "any",
   "scope": "/",
-  "short_name": "appnote.vercel",
+  "short_name": "appNote",
   "start_url": "/",
   "theme_color": "#2563eb",
   "categories": ["education"],
