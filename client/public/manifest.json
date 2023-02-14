@@ -1,0 +1,31 @@
+{
+  "background_color": "#171717",
+  "description": "App that stores notes.",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "appnote.vercel",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "appnote.vercel",
+  "start_url": "/",
+  "theme_color": "#2563eb",
+  "categories": [
+    "education"
+  ],
+  "screenshots": [],
+  "icons": [
+    {
+      "src": "/appnotelogo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/favicon.ico",
+      "type": "image/x-icon"
+    }
+  ],
+  "shortcuts": [],
+  "display_override": [
+    "standalone"
+  ]
+}
