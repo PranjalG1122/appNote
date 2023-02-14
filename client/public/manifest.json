@@ -3,15 +3,13 @@
   "description": "App that stores notes.",
   "dir": "ltr",
   "display": "standalone",
-  "name": "appnote.vercel",
+  "name": "appNote",
   "orientation": "any",
   "scope": "/",
   "short_name": "appnote.vercel",
   "start_url": "/",
   "theme_color": "#2563eb",
-  "categories": [
-    "education"
-  ],
+  "categories": ["education"],
   "screenshots": [],
   "icons": [
     {
@@ -25,7 +23,5 @@
     }
   ],
   "shortcuts": [],
-  "display_override": [
-    "standalone"
-  ]
+  "display_override": ["standalone"]
 }
