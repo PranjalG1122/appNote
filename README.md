@@ -4,6 +4,8 @@ This is a personal note taking site. It allows you to create an account, login, 
 
 Check it out: [appnote.vercel.app](https://appnote.vercel.app)
 
+Took help from maximousblk. Check him out at [maximousblk.me](https://maximousblk.me)
+
 ## Tools:
 
 ### Frontend
