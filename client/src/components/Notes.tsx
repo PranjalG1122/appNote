@@ -134,10 +134,10 @@ export default function Notes() {
   };
 
   return (
-    <main className="flex flex-row min-h-screen w-full text-white bg-neutral-900">
+    <main className="flex flex-row min-h-screen w-full text-white bg-neutral-950">
       <div
         className={
-          "desktop:left-auto transition-all delay-300 desktop:flex desktop:relative fixed bottom-0 top-0 bg-neutral-900 overflow-auto flex-col items-center desktop:w-96 md:w-80 w-full md:border-r-4 border-neutral-800 max-h-screen " +
+          "desktop:left-auto transition-all delay-300 desktop:flex desktop:relative fixed bottom-0 top-0 bg-neutral-950 overflow-auto flex-col items-center desktop:w-96 md:w-80 w-full max-h-screen " +
           (isMobileMenuClicked ? "left-0" : "left-[-100%]")
         }
       >
@@ -145,7 +145,7 @@ export default function Notes() {
           <Search />
           <input
             placeholder="Search"
-            className="px-1 outline-none w-full placeholder:text-neutral-300 font-medium py-2 bg-neutral-900 placeholder:font-semibold"
+            className="px-1 outline-none w-full placeholder:text-neutral-300 font-medium py-2 bg-neutral-950 placeholder:font-semibold"
             onChange={(e) => {
               setSearch(e.target.value);
             }}
@@ -176,8 +176,8 @@ export default function Notes() {
                     setIsMobileMenuClicked(false);
                   }}
                   className={
-                    "cursor-pointer px-2 h-20 flex flex-col justify-center bg-neutral-800 rounded-md " +
-                    (currentIndex === i ? "bg-neutral-700" : "")
+                    "cursor-pointer px-2 h-20 flex flex-col justify-center rounded-md " +
+                    (currentIndex === i ? "bg-neutral-800" : "bg-neutral-900")
                   }
                 >
                   <p className="font-semibold truncate">{note.title}</p>
@@ -193,11 +193,12 @@ export default function Notes() {
           <div className="flex flex-row items-center gap-2 ">
             <button
               className={
-                "desktop:hidden visible text-black bg-gradient-to-r from-neutral-100 to-neutral-400 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-neutral-800/80 font-semibold rounded text-base desktop:px-2 p-1 text-center " +
+                "desktop:hidden visible text-white bg-neutral-800 hover:bg-neutral-700 transition-colors focus:outline-none font-semibold rounded text-base desktop:px-2 p-1 text-center " +
                 (notes.length > 0 ? "" : "hidden")
               }
               onClick={() => {
                 setIsMobileMenuClicked(!isMobileMenuClicked);
+
               }}
             >
               <Menu />
@@ -206,7 +207,7 @@ export default function Notes() {
               onClick={() => {
                 triggerCreateNote();
               }}
-              className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded text-base desktop:px-2 p-1 text-center"
+              className="text-blue-500 bg-neutral-800 hover:bg-neutral-700 transition-colors focus:outline-none font-semibold rounded text-base desktop:px-2 p-1 text-center"
             >
               {isMutatingCreateNote ? (
                 <Loader className="animate-spin" />
@@ -220,7 +221,7 @@ export default function Notes() {
               onClick={() => {
                 triggerDeleteNote({ id: notes[currentIndex]?.id });
               }}
-              className="text-white bg-gradient-to-r from-red-500 to-red-800 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-red-800/80 font-semibold rounded text-base desktop:px-2 p-1 text-center"
+              className="bg-neutral-800 hover:bg-neutral-700 transition-colors text-red-500 focus:outline-none font-semibold rounded text-base desktop:px-2 p-1 text-center"
             >
               {isMutatingDeleteNote ? (
                 <Loader className="animate-spin" />
@@ -236,13 +237,13 @@ export default function Notes() {
               document.cookie = "token=;";
               navigate(0);
             }}
-            className="text-black bg-gradient-to-r from-neutral-300 to-neutral-400 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-neutral-800/80 font-semibold rounded text-base desktop:px-2 p-1 text-center"
+            className="text-white bg-neutral-800 hover:bg-neutral-700 transition-colors focus:outline-none font-semibold rounded text-base desktop:px-2 p-1 text-center"
           >
             <LogOut />
           </button>
         </div>
         <div
-          className="w-full bg-neutral-900 h-full flex flex-col justify-center items-center desktop:px-4 px-2 py-2"
+          className="w-full bg-neutral-950 h-full flex flex-col justify-center items-center desktop:px-4 px-2 py-2"
           onBlur={() => {
             if (typeof currentIndex == "number" && notes.length > 0) {
               triggerUpdateNote({
@@ -263,7 +264,7 @@ export default function Notes() {
                     <input
                       autoFocus={true}
                       spellCheck={false}
-                      className="flex-grow flex desktop:text-2xl border-4 border-neutral-800 px-2 py-1 rounded bg-neutral-900 focus:outline-none font-semibold"
+                      className="flex-grow flex desktop:text-2xl px-4 py-2 rounded bg-neutral-900 focus:outline-none font-semibold"
                       id="title"
                       value={getTitle()}
                       onChange={(e) => {
@@ -276,35 +277,19 @@ export default function Notes() {
                     value={getContent()}
                     disabled={isMutatingGetNotes}
                     spellCheck={false}
-                    // onKeyDown={(e) => {
-                    //   if (e.key === "Tab") {
-                    //     e.preventDefault();
-                    //     var start = e.target.selectionStart;
-                    //     var end = e.target.selectionEnd;
-
-                    //     // set textarea value to: text before caret + tab + text after caret
-                    //     e.target.value =
-                    //       e.target.value.substring(0, start) +
-                    //       "\t" +
-                    //       e.target.value.substring(end);
-
-                    //     // put caret at right position again
-                    //     e.target.selectionStart = e.target.selectionEnd = start + 1;
-                    //   }
-                    // }}
                     onChange={(e) => {
                       updateContent(e.target.value);
                     }}
-                    className="w-full h-full bg-neutral-900 border-4 border-neutral-800 px-2 py-1 mt-4 rounded focus:outline-none resize-none desktop:text-base"
+                    className="w-full h-full bg-neutral-900 p-4 mt-4 rounded focus:outline-none resize-none desktop:text-base"
                   ></textarea>
                 </>
               ) : (
-                <div className="w-full bg-neutral-900 h-full flex flex-col justify-center items-center">
+                <div className="w-full bg-neutral-950 h-full flex flex-col justify-center items-center">
                   <button
                     onClick={() => {
                       triggerCreateNote();
                     }}
-                    className="text-white bg-gradient-to-r  from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded text-xl p-2 text-center"
+                    className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded text-xl p-2 text-center"
                   >
                     Create a new note
                   </button>
