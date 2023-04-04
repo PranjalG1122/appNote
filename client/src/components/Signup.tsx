@@ -36,10 +36,7 @@ export default function Signup() {
 
   const USER_VALID = /^[a-zA-Z0-9_]{4,20}$/;
 
-  const { trigger, isMutating, data, error } = useSWRMutation(
-    "/signup",
-    createUser
-  );
+  const { trigger, isMutating } = useSWRMutation("/signup", createUser);
 
   return (
     <div className="flex flex-col gap-2 justify-center items-center w-80">
@@ -50,7 +47,7 @@ export default function Signup() {
         placeholder="Username"
         autoComplete="off"
         name="username"
-        className="w-80 text-base px-1 py-2 bg-neutral-800 focus:bg-neutral-700 placeholder:text-neutral-400 focus:outline-none rounded"
+        className="w-80 text-base px-1 py-2 bg-neutral-900 focus:bg-neutral-800 placeholder:text-neutral-400 focus:outline-none rounded-sm"
         onChange={(e) => setUsername(e.target.value)}
       ></input>
       <input
@@ -59,7 +56,7 @@ export default function Signup() {
         placeholder="Password"
         autoComplete="off"
         name="password"
-        className="w-80 text-base px-1 py-2 bg-neutral-800 focus:bg-neutral-700 placeholder:text-neutral-400 focus:outline-none rounded"
+        className="w-80 text-base px-1 py-2 bg-neutral-900 focus:bg-neutral-800 placeholder:text-neutral-400 focus:outline-none rounded-sm"
         onChange={(e) => setPassword(e.target.value)}
       ></input>
       <input
@@ -68,7 +65,7 @@ export default function Signup() {
         placeholder="Confirm Password"
         autoComplete="off"
         name="matchPassword"
-        className="w-80 text-base px-1 py-2 bg-neutral-800 focus:bg-neutral-700 placeholder:text-neutral-400 focus:outline-none rounded"
+        className="w-80 text-base px-1 py-2 bg-neutral-900 focus:bg-neutral-800 placeholder:text-neutral-400 focus:outline-none rounded-sm"
         onChange={(e) => setConfirmPassword(e.target.value)}
       ></input>
       <button
@@ -82,7 +79,7 @@ export default function Signup() {
       </button>
       <button
         disabled={isMutating}
-        className="text-white w-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded text-xl p-2 text-center"
+        className="text-white w-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded-sm text-xl p-2 text-center"
         onClick={async () => {
           if (!(username.length > 3)) {
             setErrorMessage("Username must be at least 4 characters long");
@@ -126,7 +123,7 @@ export default function Signup() {
         )}
       </button>
       {errorMessage && (
-        <p className="fixed bottom-10 mx-4 max-w-96 text-center font-semibold text-white bg-red-600 desktop:px-2 py-1 px-1 rounded desktop:text-base text-sm">
+        <p className="fixed bottom-10 mx-4 max-w-96 text-center font-semibold text-white bg-red-600 desktop:px-2 py-1 px-1 rounded-sm desktop:text-base text-sm">
           {errorMessage}
         </p>
       )}

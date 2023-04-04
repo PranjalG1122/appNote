@@ -52,7 +52,7 @@ export default function Terms() {
           </li>
         </ul>
         <Link to="/">
-          <p className="mt-4 text-white w-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded text-xl p-2 text-center">
+          <p className="mt-4 text-white w-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded-sm text-xl p-2 text-center">
             Back to Home
           </p>
         </Link>

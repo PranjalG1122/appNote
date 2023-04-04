@@ -34,7 +34,7 @@ export default function App() {
               lication to write a <span className="font-semibold">note</span>
             </p>
             <Link to="/auth">
-              <p className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded text-xl p-2 text-center">
+              <p className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 hover:bg-gradient-to-br focus:outline-none shadow-sm shadow-blue-800/80 font-semibold rounded-sm text-xl p-2 text-center">
                 Start now
               </p>
             </Link>
