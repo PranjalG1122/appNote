@@ -141,122 +141,119 @@ export default function Notes() {
           (isMobileMenuClicked ? "left-0" : "left-[-100%]")
         }
       >
-        <div className="flex flex-row items-center w-full px-2">
+        <div className="flex flex-row items-center w-full px-2 h-14">
           <Search />
           <input
             placeholder="Search"
-            className="px-1 outline-none w-full placeholder:text-neutral-300 font-medium py-2 bg-neutral-950 placeholder:font-semibold"
+            className="px-1 outline-none w-full placeholder:text-neutral-300 font-medium bg-neutral-950 placeholder:font-semibold"
             onChange={(e) => {
               setSearch(e.target.value);
             }}
           />
         </div>
-        <div className="w-full overflow-auto mt-0">
+        <div className="w-full overflow-auto mt-0 pt-2">
           {notes.map((note, i) => {
             if (!note.title.toLowerCase().includes(search.toLowerCase())) {
               return;
             }
             return (
-              <div key={note.id} className="px-2 py-1 mb-1">
-                <div className="flex flex-row items-center gap-2">
-                  <p className="text-sm text-neutral-400 italic">
-                    Last updated:{" "}
-                    {format(new Date(note.updated), " dd/MM/yyyy")}
-                  </p>
-                  <p>
-                    {" "}
-                    {isMutatingUpdateNote && currentIndex === i ? (
-                      <Loader className="animate-spin h-3 w-3" />
-                    ) : null}
-                  </p>
-                </div>
+              <div key={note.id} className="px-2 py-0 mb-1">
                 <div
                   onClick={() => {
                     updateIndex(i);
                     setIsMobileMenuClicked(false);
                   }}
                   className={
-                    "cursor-pointer px-2 h-20 flex flex-col justify-center rounded-md " +
+                    "cursor-pointer px-2 h-20 flex flex-row items-center justify-between rounded " +
                     (currentIndex === i ? "bg-neutral-800" : "bg-neutral-900")
                   }
                 >
-                  <p className="font-semibold truncate">{note.title}</p>
-                  <p className="truncate">{note.content}</p>
+                  <div className="flex flex-col justify-center truncate w-[90%]">
+                    <p className="font-semibold ">{note.title}</p>
+                    <p className="truncate">{note.content}</p>
+                  </div>
+                  <p>
+                    {isMutatingUpdateNote && currentIndex === i ? (
+                      <Loader className="animate-spin h-3 w-3" />
+                    ) : null}
+                  </p>
                 </div>
               </div>
             );
           })}
         </div>
       </div>
-      <div className="flex flex-col flex-grow">
-        <div className="flex flex-row items-center w-full justify-between desktop:px-4 px-2 py-2">
-          <div className="flex flex-row items-center gap-2 ">
+      {isMutatingGetNotes ? (
+        <div className="flex flex-col w-full items-center min-h-screen justify-center">
+          <Loader className="animate-spin" />
+        </div>
+      ) : (
+        <div className="flex flex-col flex-grow">
+          <div className="flex flex-row items-center w-full justify-between desktop:px-4 px-2">
+            <div className="flex flex-row items-center gap-2 h-14">
+              <button
+                className={
+                  "desktop:hidden visible text-white bg-neutral-800 hover:bg-neutral-700 transition-colors focus:outline-none font-semibold rounded text-base desktop:px-2 p-1 text-center " +
+                  (notes.length > 0 ? "" : "hidden")
+                }
+                onClick={() => {
+                  setIsMobileMenuClicked(!isMobileMenuClicked);
+                }}
+              >
+                <Menu />
+              </button>
+              <button
+                onClick={() => {
+                  triggerCreateNote();
+                }}
+                className="text-blue-500 bg-neutral-800 hover:bg-neutral-700 transition-colors focus:outline-none font-semibold rounded text-base desktop:px-2 p-1 text-center"
+              >
+                {isMutatingCreateNote ? (
+                  <Loader className="animate-spin" />
+                ) : (
+                  <>
+                    <Plus />
+                  </>
+                )}
+              </button>
+              <button
+                onClick={() => {
+                  triggerDeleteNote({ id: notes[currentIndex]?.id });
+                }}
+                className="bg-neutral-800 hover:bg-neutral-700 transition-colors text-red-500 focus:outline-none font-semibold rounded text-base desktop:px-2 p-1 text-center"
+              >
+                {isMutatingDeleteNote ? (
+                  <Loader className="animate-spin" />
+                ) : (
+                  <>
+                    <Trash />
+                  </>
+                )}
+              </button>
+            </div>
             <button
-              className={
-                "desktop:hidden visible text-white bg-neutral-800 hover:bg-neutral-700 transition-colors focus:outline-none font-semibold rounded text-base desktop:px-2 p-1 text-center " +
-                (notes.length > 0 ? "" : "hidden")
-              }
               onClick={() => {
-                setIsMobileMenuClicked(!isMobileMenuClicked);
-
+                document.cookie = "token=;";
+                navigate(0);
               }}
+              className="text-white bg-neutral-800 hover:bg-neutral-700 transition-colors focus:outline-none font-semibold rounded text-base desktop:px-2 p-1 text-center"
             >
-              <Menu />
-            </button>
-            <button
-              onClick={() => {
-                triggerCreateNote();
-              }}
-              className="text-blue-500 bg-neutral-800 hover:bg-neutral-700 transition-colors focus:outline-none font-semibold rounded text-base desktop:px-2 p-1 text-center"
-            >
-              {isMutatingCreateNote ? (
-                <Loader className="animate-spin" />
-              ) : (
-                <>
-                  <Plus />
-                </>
-              )}
-            </button>
-            <button
-              onClick={() => {
-                triggerDeleteNote({ id: notes[currentIndex]?.id });
-              }}
-              className="bg-neutral-800 hover:bg-neutral-700 transition-colors text-red-500 focus:outline-none font-semibold rounded text-base desktop:px-2 p-1 text-center"
-            >
-              {isMutatingDeleteNote ? (
-                <Loader className="animate-spin" />
-              ) : (
-                <>
-                  <Trash />
-                </>
-              )}
+              <LogOut />
             </button>
           </div>
-          <button
-            onClick={() => {
-              document.cookie = "token=;";
-              navigate(0);
+
+          <div
+            className="w-full bg-neutral-950 h-full flex flex-col justify-center items-center desktop:px-4 px-2 py-2"
+            onBlur={() => {
+              if (typeof currentIndex == "number" && notes.length > 0) {
+                triggerUpdateNote({
+                  id: notes[currentIndex].id,
+                  title: getTitle(),
+                  content: getContent(),
+                });
+              }
             }}
-            className="text-white bg-neutral-800 hover:bg-neutral-700 transition-colors focus:outline-none font-semibold rounded text-base desktop:px-2 p-1 text-center"
           >
-            <LogOut />
-          </button>
-        </div>
-        <div
-          className="w-full bg-neutral-950 h-full flex flex-col justify-center items-center desktop:px-4 px-2 py-2"
-          onBlur={() => {
-            if (typeof currentIndex == "number" && notes.length > 0) {
-              triggerUpdateNote({
-                id: notes[currentIndex].id,
-                title: getTitle(),
-                content: getContent(),
-              });
-            }
-          }}
-        >
-          {isMutatingGetNotes ? (
-            <Loader className="animate-spin" />
-          ) : (
             <>
               {notes.length > 0 ? (
                 <>
@@ -296,9 +293,9 @@ export default function Notes() {
                 </div>
               )}
             </>
-          )}
+          </div>
         </div>
-      </div>
+      )}
     </main>
   );
 }
