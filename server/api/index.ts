@@ -4,7 +4,7 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || "dev";
 
 import cors from "cors";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import { hash, compare } from "bcrypt";
 import express from "express";
 import { Request, Response } from "express";
@@ -20,8 +20,6 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
 app.options("*", cors());
-
-// add return in gates
 
 app.get("/ping", (req: Request, res: Response) => {
   res.status(200).json({ success: true, message: "pong" });
@@ -54,13 +52,12 @@ app.post("/signup", async (req: Request, res: Response) => {
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
-        console.log(
-          "There is a unique constraint violation, a new user cannot be created with this username"
-        );
+        console.warn(e);
         res
           .status(409)
           .json({ success: false, message: "Username already exists" });
       } else {
+        console.warn(e);
         res
           .status(500)
           .json({ sucess: false, message: "Error occured while signing up" });
@@ -105,6 +102,7 @@ app.post("/signin", async (req: Request, res: Response) => {
       .status(200)
       .json({ success: true, message: "Signed in" });
   } catch (e) {
+    console.warn(e);
     res
       .status(500)
       .json({ success: false, message: "Error occured while signing in" });
@@ -143,6 +141,7 @@ app.get("/getnotes", async (req: Request, res: Response) => {
         .reverse(),
     });
   } catch (e) {
+    console.warn(e);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
@@ -170,6 +169,7 @@ app.get("/createnote", async (req: Request, res: Response) => {
     });
     res.status(200).json({ success: true, message: "Note created" });
   } catch (e) {
+    console.warn(e);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
@@ -203,6 +203,7 @@ app.post("/deletenote", async (req: Request, res: Response) => {
     });
     res.status(200).json({ success: true, message: "Note deleted" });
   } catch (e) {
+    console.warn(e);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
@@ -240,6 +241,7 @@ app.post("/updatenote", async (req: Request, res: Response) => {
     });
     res.status(200).json({ success: true, message: "Note updated" });
   } catch (e) {
+    console.warn(e);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
